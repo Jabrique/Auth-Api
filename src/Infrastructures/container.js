@@ -1,4 +1,4 @@
-/** istanbul ignore file */
+/* istanbul ignore file */
 
 const { createContainer } = require('instances-container');
 
@@ -37,7 +37,7 @@ container.register([
   },
   {
     key: PasswordHash.name,
-    class: BcryptPasswordHash,
+    Class: BcryptPasswordHash,
     parameter: {
       dependencies: [
         {
@@ -52,7 +52,7 @@ container.register([
 container.register([
   {
     key: AddUserUseCase.name,
-    class: AddUserUseCase,
+    Class: AddUserUseCase,
     parameter: {
       injectType: 'destructuring',
       dependencies: [

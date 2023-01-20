@@ -26,7 +26,7 @@ describe('AuthRepoPosgres', () => {
         const token = 'token';
 
         // Action
-        authRepoPosgres.addToken(token);
+        await authRepoPosgres.addToken(token);
 
         // Assert
         const tokens = await AuthenticationsTableTestHelper.findToken(token);

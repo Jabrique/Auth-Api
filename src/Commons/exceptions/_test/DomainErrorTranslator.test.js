@@ -1,5 +1,5 @@
 const InvariantError = require('../InvariantError');
-const DomainErrorTranslator = require('../DomainErrorTranslator')
+const DomainErrorTranslator = require('../DomainErrorTranslator');
 
 describe('DomainErrorTranslator', () => {
   it('should tranlsate error correctly', () => {
@@ -11,6 +11,14 @@ describe('DomainErrorTranslator', () => {
       .toStrictEqual(new InvariantError('tidak dapat membuat user baru karena karakter username melebihi batas limit'));
     expect(DomainErrorTranslator.translate(new Error('REGISTER_USER.USERNAME_CONTAIN_RESTRICTED_CHARACTER')))
       .toStrictEqual(new InvariantError('tidak dapat membuat user baru karena username mengandung karakter terlarang'));
+    expect(DomainErrorTranslator.translate(new Error('LOGIN_USER.NOT_CONTAIN_NEEDED_PROPERTY')))
+      .toStrictEqual(new InvariantError('tidak dapat melakukan login karena properti yang dibutuhkan tidak ada'));
+    expect(DomainErrorTranslator.translate(new Error('LOGIN_USER.NOT_MEET_DATA_TYPE_SPECIFICATION')))
+      .toStrictEqual(new InvariantError('tidak dapat melakukan login karena tipe data tidak sesuai'));
+    expect(DomainErrorTranslator.translate(new Error('REFRESH_TOKEN.NOT_CONTAIN_NEEDED_PROPERTY')))
+      .toStrictEqual(new InvariantError('refresh token tidak ditemukan pada payload'));
+    expect(DomainErrorTranslator.translate(new Error('REFRESH_TOKEN.NOT_MEET_DATA_TYPE_SPECIFICATION')))
+      .toStrictEqual(new InvariantError('refresh token harus string'));
   });
 
   it('should return original error when error message is not needed to translate', () => {
@@ -21,6 +29,6 @@ describe('DomainErrorTranslator', () => {
     const translatedError = DomainErrorTranslator.translate(error);
 
     // Assert
-    expect(translatedError).toStrictEqual(error)
+    expect(translatedError).toStrictEqual(error);
   });
 });

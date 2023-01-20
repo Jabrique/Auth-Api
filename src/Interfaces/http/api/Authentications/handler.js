@@ -1,3 +1,7 @@
+const LoginUseCase = require('../../../../Applications/user_case/LoginUseCase');
+const LogoutUseCase = require('../../../../Applications/user_case/LogoutUseCase');
+const RefreshAccessToken = require('../../../../Applications/user_case/RefreshAccessToken');
+
 class AuthenticationsHandler {
   constructor(container) {
     this._container = container;

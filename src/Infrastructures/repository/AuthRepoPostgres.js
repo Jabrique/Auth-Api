@@ -20,7 +20,7 @@ class AuthRepoPosgres extends AuthRepo {
       values: [token],
     });
     if (!query.rowCount) {
-      throw new InvariantError('refresh token tidak valid');
+      throw new InvariantError('refresh token tidak ditemukan di database');
     }
   }
 

@@ -9,8 +9,8 @@ class RefreshAccessToken {
   async execute(useCasePayload) {
     const { refreshToken } = new RefreshToken(useCasePayload);
 
-    await this._authRepo.checkAvailabilityToken(refreshToken);
     const { id } = await this._tokenManager.verifyRefreshToken(refreshToken);
+    await this._authRepo.checkAvailabilityToken(refreshToken);
 
     const accessToken = await this._tokenManager.createAccessToken({ id });
     return accessToken;

@@ -55,23 +55,23 @@ container.register([
     },
   },
   {
+    key: TokenManager.name,
+    Class: JwtTokenManager,
+    parameter: {
+      dependencies: [
+        {
+          concrete: Jwt.token,
+        },
+      ],
+    },
+  },
+  {
     key: AuthRepo.name,
     Class: AuthRepoPostgres,
     parameter: {
       dependencies: [
         {
           concrete: pool,
-        },
-      ],
-    },
-  },
-  {
-    key: TokenManager.name,
-    Class: JwtTokenManager,
-    parameter: {
-      dependencies: [
-        {
-          concrete: Jwt,
         },
       ],
     },

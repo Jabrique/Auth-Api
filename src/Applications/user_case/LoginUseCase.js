@@ -25,7 +25,7 @@ class LoginUseCase {
 
     const newAuthentication = new NewAuth({ accessToken, refreshToken });
 
-    this._authRepo.addToken(newAuthentication.refreshToken);
+    await this._authRepo.addToken(newAuthentication.refreshToken);
 
     return newAuthentication;
   }

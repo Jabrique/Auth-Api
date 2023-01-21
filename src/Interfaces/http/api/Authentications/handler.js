@@ -12,7 +12,7 @@ class AuthenticationsHandler {
   }
 
   async postAuthenticationsHandler(request, h) {
-    const loginUseCase = this._container.getInstances(LoginUseCase.name);
+    const loginUseCase = this._container.getInstance(LoginUseCase.name);
     const { accessToken, refreshToken } = await loginUseCase.execute(request.payload);
 
     const response = h.response({
@@ -27,8 +27,8 @@ class AuthenticationsHandler {
   }
 
   async putAuthenticationsHandler(request) {
-    const refreshAccessToken = this._container.getInstances(RefreshAccessToken.name);
-    const { accessToken } = await refreshAccessToken.execute(request.payload);
+    const refreshAccessToken = this._container.getInstance(RefreshAccessToken.name);
+    const accessToken = await refreshAccessToken.execute(request.payload);
 
     return {
       status: 'success',
@@ -39,7 +39,7 @@ class AuthenticationsHandler {
   }
 
   async deleteAuthenticationsHandler(request) {
-    const logoutUseCase = this._container.getInstances(LogoutUseCase.name);
+    const logoutUseCase = this._container.getInstance(LogoutUseCase.name);
     await logoutUseCase.execute(request.payload);
 
     return {

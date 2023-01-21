@@ -8,7 +8,7 @@ describe('LogoutUseCase', () => {
     const logoutUseCase = new LogoutUseCase({});
 
     // Action and Assert
-    await expect(logoutUseCase.execute(payload)).rejects.toThrowError('DELETE_AUTHENTICATION_USE_CASE.NOT_CONTAIN_REFRESH_TOKEN');
+    await expect(logoutUseCase.execute(payload)).rejects.toThrowError('REFRESH_TOKEN.NOT_CONTAIN_NEEDED_PROPERTY');
   });
 
   it('should throw error if refresh token not string', async () => {
@@ -19,7 +19,7 @@ describe('LogoutUseCase', () => {
     const logoutUseCase = new LogoutUseCase({});
 
     // Action and Assert
-    await expect(logoutUseCase.execute(payload)).rejects.toThrowError('DELETE_AUTHENTICATION_USE_CASE_PAYLOAD.NOT_MEET_DATA_TYPE_SPECIFICATION');
+    await expect(logoutUseCase.execute(payload)).rejects.toThrowError('REFRESH_TOKEN.NOT_MEET_DATA_TYPE_SPECIFICATION');
   });
 
   it('should orchestrating the delete authentication action correctly', async() => {

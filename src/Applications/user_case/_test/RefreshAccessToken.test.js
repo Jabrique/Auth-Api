@@ -11,7 +11,7 @@ describe('RefreshAccessTokenCase', () => {
     const refreshAccessToken = new RefreshAccessToken({});
 
     // Assert
-    await expect(() => refreshAccessToken.execute(useCasePayload)).rejects.toThrowError('REFRESH_ACCESS_TOKEN.METHOD_NOT_CONTAIN_REFRESH_TOKEN');
+    await expect(() => refreshAccessToken.execute(useCasePayload)).rejects.toThrowError('REFRESH_TOKEN.NOT_CONTAIN_NEEDED_PROPERTY');
   });
 
   it('should throw error if use case payload not meet data type specification', async () => {
@@ -22,7 +22,7 @@ describe('RefreshAccessTokenCase', () => {
     const refreshAccessToken = new RefreshAccessToken({});
 
     // Assert
-    await expect(() => refreshAccessToken.execute(useCasePayload)).rejects.toThrowError('REFRESH_ACCESS_TOKEN.METHOD_NOT_MEET_DATA_TYPE_SPECIFICATION');
+    await expect(() => refreshAccessToken.execute(useCasePayload)).rejects.toThrowError('REFRESH_TOKEN.NOT_MEET_DATA_TYPE_SPECIFICATION');
   });
 
   it('should orchestrating the refresh authentication action correctly', async () => {

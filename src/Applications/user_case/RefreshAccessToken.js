@@ -12,17 +12,17 @@ class RefreshAccessToken {
     await this._authRepo.checkAvailabilityToken(refreshToken);
     const { id } = await this._tokenManager.verifyRefreshToken(refreshToken);
 
-    const newAccessToken = await this._tokenManager.createAccessToken({ id });
-    return newAccessToken;
+    const accessToken = await this._tokenManager.createAccessToken({ id });
+    return accessToken;
   }
 
   _validateUseCasePayload({ refreshToken }) {
     if (!refreshToken) {
-      throw new Error('REFRESH_ACCESS_TOKEN.METHOD_NOT_CONTAIN_REFRESH_TOKEN');
+      throw new Error('REFRESH_TOKEN.NOT_CONTAIN_NEEDED_PROPERTY');
     }
 
     if (typeof refreshToken !== 'string') {
-      throw new Error('REFRESH_ACCESS_TOKEN.METHOD_NOT_MEET_DATA_TYPE_SPECIFICATION');
+      throw new Error('REFRESH_TOKEN.NOT_MEET_DATA_TYPE_SPECIFICATION');
     }
   }
 }

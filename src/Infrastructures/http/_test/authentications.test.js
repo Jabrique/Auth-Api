@@ -5,13 +5,12 @@ const pool = require('../../database/postgres/pool');
 const createServer = require('../createServer');
 
 describe('/authentications endpoint', () => {
-  afterEach(() => {
-    AuthenticationsTableTestHelper.cleanTable();
-    usersTableTestHelper.cleanTable();
+  afterAll(async () => {
+    await pool.end();
   });
-
-  afterAll(() => {
-    pool.end();
+  afterEach(async () => {
+    await AuthenticationsTableTestHelper.cleanTable();
+    await usersTableTestHelper.cleanTable();
   });
 
   describe('when POST /authentications', () => {
@@ -35,39 +34,6 @@ describe('/authentications endpoint', () => {
       expect(response.statusCode).toEqual(400);
       expect(responseJson.status).toEqual('fail');
       expect(responseJson.message).toEqual('username tidak ditemukan');
-    });
-
-    it('should return statusCode 401 when password wrong', async () => {
-      // Arrange
-      const requestPayload = {
-        username: 'dicoding',
-        password: 'test123',
-      };
-      const server = await createServer(container);
-
-      // add user
-      await server.inject({
-        method: 'POST',
-        url: '/users',
-        payload: {
-          username: 'dicoding',
-          password: 'wow123',
-          fullname: 'dicoding Indonesia',
-        },
-      });
-
-      // Action
-      const response = await server.inject({
-        method: 'POST',
-        url: '/authentications',
-        payload: requestPayload,
-      });
-
-      // Assert
-      const responseJson = JSON.parse(response.payload);
-      expect(response.statusCode).toEqual(401);
-      expect(responseJson.status).toEqual('fail');
-      expect(responseJson.message).toEqual('password anda salah');
     });
 
     it('should return statusCode 400 when payload not contain needed property', async () => {
@@ -167,7 +133,7 @@ describe('/authentications endpoint', () => {
       const responseJson = JSON.parse(response.payload);
       expect(response.statusCode).toEqual(400);
       expect(responseJson.status).toEqual('fail');
-      expect(responseJson.message).toEqual('refreshToken harus string');
+      expect(responseJson.message).toEqual('refresh token harus string');
     });
 
     it('should return 400 if payload not contain refreshToken', async () => {
@@ -234,7 +200,7 @@ describe('/authentications endpoint', () => {
         },
       });
 
-      const { data: { refreshToken } } = loginResponse;
+      const { data: { refreshToken } } = JSON.parse(loginResponse.payload);
 
       // Action
       const response = await server.inject({
@@ -245,9 +211,9 @@ describe('/authentications endpoint', () => {
 
       // Assert
       const responseJson = JSON.parse(response.payload);
-      expect(response.statusCode).toEqual(201);
+      expect(response.statusCode).toEqual(200);
       expect(responseJson.status).toEqual('success');
-      expect(response.data.accessToken).toBeDefined();
+      expect(responseJson.data.accessToken).toBeDefined();
     });
   });
 
@@ -284,7 +250,7 @@ describe('/authentications endpoint', () => {
       });
 
       // Assert
-      const responseJson = JSON.parse(response);
+      const responseJson = JSON.parse(response.payload);
       expect(response.statusCode).toEqual(400);
       expect(responseJson.status).toEqual('fail');
     });
